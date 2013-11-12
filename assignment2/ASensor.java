@@ -1,13 +1,14 @@
 package assignment2;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ASensor implements Sensor, Runnable {
-	List<Monitor> monitors; //A sensor can push readings to one or many monitors
-	SensorReading sr;
+	List<Monitor> monitors = new ArrayList<Monitor>(); //A sensor can push readings to one or many monitors
 	
 	public SensorReading generateSensorReading() {
+		SensorReading sr = new SensorReading();
 		
 		Random rand = new Random();
 
@@ -17,7 +18,7 @@ public class ASensor implements Sensor, Runnable {
 		sr.setHumidity(randomNumHum);
 		sr.setTemperature(randomNumTem);
 		
-		return null;
+		return sr;
 	}
 
 	public void run() {
