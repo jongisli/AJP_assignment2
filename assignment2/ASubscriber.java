@@ -1,12 +1,11 @@
 package assignment2;
 
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Queue;
 
 public class ASubscriber implements Subscriber, Runnable {
 
-	private List<Integer> discomfortLevelList;
+	private Queue<Integer> discomfortLevelList;
 	private int maxBufferSize;
 	
 	public ASubscriber(int maxBufferSize)
@@ -43,8 +42,18 @@ public class ASubscriber implements Subscriber, Runnable {
 
 	@Override
 	public int getDiscomfortWarning() {
-		// TODO Auto-generated method stub
-		return 0;
+		while(discomfortLevelList.size() != 0)
+		{
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		int discomfortWarning = discomfortLevelList.poll();
+		notify();
+		return discomfortWarning;
 	}
 
 
