@@ -1,6 +1,5 @@
 package assignment2;
 
-import java.util.List;
 import java.util.Queue;
 
 public class ASubscriber implements Subscriber, Runnable {
@@ -21,7 +20,7 @@ public class ASubscriber implements Subscriber, Runnable {
 	}
 
 	@Override
-	public void pushDiscomfortWarning(int discomfortlevel) {
+	public synchronized void pushDiscomfortWarning(int discomfortlevel) {
 		while (!(discomfortLevelList.size() < maxBufferSize))
 		{
 			try {
@@ -35,13 +34,13 @@ public class ASubscriber implements Subscriber, Runnable {
 	}
 
 	@Override
-	public void processDiscomfortWarning(int discomfortLevel) {
+	public synchronized void processDiscomfortWarning(int discomfortLevel) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public int getDiscomfortWarning() {
+	public synchronized int getDiscomfortWarning() {
 		while(discomfortLevelList.size() != 0)
 		{
 			try {
