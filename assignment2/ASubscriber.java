@@ -21,16 +21,11 @@ public class ASubscriber implements Subscriber, Runnable {
 
 	@Override
 	public void pushDiscomfortWarning(int discomfortlevel) {
-		while (discomfortLevelQueue.remainingCapacity() == 0)
-		{
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		try {
+			discomfortLevelQueue.put(discomfortlevel);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		discomfortLevelQueue.add(discomfortlevel);
-		notify();
 	}
 
 	@Override
@@ -61,17 +56,12 @@ public class ASubscriber implements Subscriber, Runnable {
 
 	@Override
 	public int getDiscomfortWarning() {
-		while(discomfortLevelQueue.isEmpty())
-		{
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		int discomfortWarning = 0;
+		try {
+			discomfortWarning = discomfortLevelQueue.take();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		int discomfortWarning = discomfortLevelQueue.poll();
-		notify();
 		return discomfortWarning;
 	}
 
