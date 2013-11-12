@@ -21,11 +21,7 @@ public class ASubscriber implements Subscriber, Runnable {
 
 	@Override
 	public void pushDiscomfortWarning(int discomfortlevel) {
-		try {
-			discomfortLevelQueue.put(discomfortlevel);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		discomfortLevelQueue.offer(discomfortlevel);
 	}
 
 	@Override
