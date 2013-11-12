@@ -1,15 +1,15 @@
 package assignment2;
 
-import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ASubscriber implements Subscriber, Runnable {
 
-	private Queue<Integer> discomfortLevelList;
-	private int maxBufferSize;
+	private BlockingQueue<Integer> discomfortLevelQueue;
 	
 	public ASubscriber(int maxBufferSize)
 	{
-		this.maxBufferSize = maxBufferSize;
+		discomfortLevelQueue = new ArrayBlockingQueue<Integer>(maxBufferSize);
 	}
 	
 	public void run() {
@@ -20,8 +20,8 @@ public class ASubscriber implements Subscriber, Runnable {
 	}
 
 	@Override
-	public synchronized void pushDiscomfortWarning(int discomfortlevel) {
-		while (!(discomfortLevelList.size() < maxBufferSize))
+	public void pushDiscomfortWarning(int discomfortlevel) {
+		while (discomfortLevelQueue.remainingCapacity() == 0)
 		{
 			try {
 				wait();
@@ -29,19 +29,39 @@ public class ASubscriber implements Subscriber, Runnable {
 				e.printStackTrace();
 			}
 		}
-		discomfortLevelList.add(discomfortlevel);
+		discomfortLevelQueue.add(discomfortlevel);
 		notify();
 	}
 
 	@Override
-	public synchronized void processDiscomfortWarning(int discomfortLevel) {
-		// TODO Auto-generated method stub
+	public void processDiscomfortWarning(int discomfortLevel) {
+		switch (discomfortLevel)
+		{
+			case 1: 
+				System.out.println("(1) Getting warm!");
+				break;
+			case 2: 
+				System.out.println("(2) Getting hot!");
+				break;
+			case 3: 
+				System.out.println("(3) Getting very hot!");
+				break;
+			case 4: 
+				System.out.println("(4) Getting inferno!");
+				break;
+			case 5: 
+				System.out.println("(5) Getting death!");
+				break;
+			default: 
+				System.out.println("Unknown discomfort level");
+				break; 
+		}
 		
 	}
 
 	@Override
-	public synchronized int getDiscomfortWarning() {
-		while(discomfortLevelList.size() != 0)
+	public int getDiscomfortWarning() {
+		while(discomfortLevelQueue.isEmpty())
 		{
 			try {
 				wait();
@@ -50,7 +70,7 @@ public class ASubscriber implements Subscriber, Runnable {
 				e.printStackTrace();
 			}
 		}
-		int discomfortWarning = discomfortLevelList.poll();
+		int discomfortWarning = discomfortLevelQueue.poll();
 		notify();
 		return discomfortWarning;
 	}
