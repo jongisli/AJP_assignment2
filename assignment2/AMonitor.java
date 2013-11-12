@@ -8,15 +8,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AMonitor implements Monitor, Runnable {
 	
-	private  BlockingQueue<SensorReading> queue;
+	private BlockingQueue<SensorReading> queue;
 	private ConcurrentHashMap<Integer, List<Subscriber>> chm;
-	private  float avgTemp = 0;
+	private float avgTemp = 0;
 	private float avgHum = 0;
 	private int n = 0;
 	
 	//private Queue<Float> windowTemp = new <Float>(10);
 
-	public AMonitor(int QueueSize) {
+	public AMonitor(int QueueSize, int ID) {
 		queue = new ArrayBlockingQueue<SensorReading>(QueueSize);
 		chm = new ConcurrentHashMap<Integer, List<Subscriber>>();
 		chm.put(1, new ArrayList<Subscriber>());
@@ -55,14 +55,17 @@ public class AMonitor implements Monitor, Runnable {
 		else if(avgTemp >=50 || avgHum >= 90) {
 			disLevel = 5;
 		}
-				
+		
 		//Note that you need to push computed discomfort levels to the registered
 		//subscribers using the registerDiscomfortLevel method in Subscriber interface
-		List<Subscriber> subscribers = chm.get(disLevel);
-		for(int i = 0; i < subscribers.size(); i++) {
-			subscribers.get(i).pushDiscomfortWarning(disLevel);
-		}
 		
+		if (disLevel != 0)
+		{
+			List<Subscriber> subscribers = chm.get(disLevel);
+			for(int i = 0; i < subscribers.size(); i++) {
+				subscribers.get(i).pushDiscomfortWarning(disLevel);
+			}
+		}
 	}
 
 	@Override

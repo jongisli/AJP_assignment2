@@ -10,11 +10,31 @@ public class SensorNetworkHarness {
 	 */
 	public static void main(String[] args) {
 		ASensor sensor1 = new ASensor();
+		AMonitor monitor1 = new AMonitor(1024, 1);
+		List<Monitor> monitorList1 = new ArrayList<Monitor>();
+		monitorList1.add(monitor1);
+		sensor1.registerMonitor(monitorList1);
+		ASubscriber subscriber1 = new ASubscriber(10);
+		
+		monitor1.registerSubscriber(1, subscriber1);
+		monitor1.registerSubscriber(2, subscriber1);
+		monitor1.registerSubscriber(3, subscriber1);
+		monitor1.registerSubscriber(4, subscriber1);
+		monitor1.registerSubscriber(5, subscriber1);
+		
+		Thread thread1 = new Thread(sensor1);
+		thread1.start();
+		Thread thread2 = new Thread(monitor1);
+		thread2.start();
+		Thread thread3 = new Thread(subscriber1);
+		thread3.start();
+		
+		/*ASensor sensor1 = new ASensor();
 		ASensor sensor2 = new ASensor();
 		ASensor sensor3 = new ASensor();
 		
-		AMonitor monitor1 = new AMonitor(1024);
-		AMonitor monitor2 = new AMonitor(1024);
+		AMonitor monitor1 = new AMonitor(1024, 1);
+		AMonitor monitor2 = new AMonitor(1024, 2);
 		
 		List<Monitor> monitorList1 = new ArrayList<Monitor>();
 		monitorList1.add(monitor1);
@@ -65,7 +85,9 @@ public class SensorNetworkHarness {
 		Thread thread6 = new Thread(subscriber1);
 		thread6.start();
 		Thread thread7 = new Thread(subscriber2);
-		thread7.start();
+		thread7.start();*/
+		
+		
 	}
 
 }
