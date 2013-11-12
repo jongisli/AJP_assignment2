@@ -81,7 +81,6 @@ public class AMonitor implements Monitor, Runnable {
 			//The head of the queue is that element that has been on the queue the longest time
 			sr = queue.take();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return sr;

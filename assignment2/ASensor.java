@@ -7,10 +7,11 @@ import java.util.Random;
 public class ASensor implements Sensor, Runnable {
 	List<Monitor> monitors = new ArrayList<Monitor>(); //A sensor can push readings to one or many monitors
 	
+	private 		SensorReading sr = new SensorReading();
+	
+	private Random rand = new Random();
 	public SensorReading generateSensorReading() {
-		SensorReading sr = new SensorReading();
-		
-		Random rand = new Random();
+
 
 	    float randomNumTem = rand.nextInt((80 - 10) + 1) + 10;
 	    float randomNumHum = rand.nextInt((95 - 50) + 1) + 50;
