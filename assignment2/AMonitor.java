@@ -17,7 +17,7 @@ public class AMonitor implements Monitor, Runnable {
 	//private Queue<Float> windowTemp = new <Float>(10);
 
 	public AMonitor(int QueueSize) {
-		queue = new ArrayBlockingQueue<SensorReading>(1024);
+		queue = new ArrayBlockingQueue<SensorReading>(QueueSize);
 		chm = new ConcurrentHashMap<Integer, List<Subscriber>>();
 		chm.put(1, new ArrayList<Subscriber>());
 		chm.put(2, new ArrayList<Subscriber>());
