@@ -9,7 +9,7 @@ public class SensorNetworkHarness {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ASensor sensor1 = new ASensor();
+		/*ASensor sensor1 = new ASensor();
 		AMonitor monitor1 = new AMonitor(1024, 1);
 		List<Monitor> monitorList1 = new ArrayList<Monitor>();
 		monitorList1.add(monitor1);
@@ -27,9 +27,9 @@ public class SensorNetworkHarness {
 		Thread thread2 = new Thread(monitor1);
 		thread2.start();
 		Thread thread3 = new Thread(subscriber1);
-		thread3.start();
+		thread3.start();*/
 		
-		/*ASensor sensor1 = new ASensor();
+		ASensor sensor1 = new ASensor();
 		ASensor sensor2 = new ASensor();
 		ASensor sensor3 = new ASensor();
 		
@@ -85,7 +85,7 @@ public class SensorNetworkHarness {
 		Thread thread6 = new Thread(subscriber1);
 		thread6.start();
 		Thread thread7 = new Thread(subscriber2);
-		thread7.start();*/
+		thread7.start();
 		
 		
 	}

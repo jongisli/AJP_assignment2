@@ -37,8 +37,8 @@ public class AMonitor implements Monitor, Runnable {
 		int disLevel = 0;
 		n++;
 		
-		avgTemp = (n-1)/n * avgTemp + sensorInput.getTemperature()/n;
-		avgHum = (n-1)/n * avgHum + sensorInput.getTemperature()/n;
+		avgTemp = (n-1)/(float)n * avgTemp + sensorInput.getTemperature()/(float)n;
+		avgHum = (n-1)/(float)n * avgHum + sensorInput.getTemperature()/(float)n;
 		
 		if((avgTemp >=10 && avgTemp <= 19) || (avgHum >= 50 && avgHum <=59)) {
 			disLevel = 1;
